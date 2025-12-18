@@ -1,0 +1,243 @@
+services:
+  # ============================================
+  # Zookeeper
+  # ============================================
+  zookeeper:
+    image: confluentinc/cp-zookeeper:7.5.0
+    container_name: zookeeper
+    environment:
+      ZOOKEEPER_CLIENT_PORT: 2181
+      ZOOKEEPER_TICK_TIME: 2000
+    ports:
+      - "2181:2181"
+    networks:
+      - bigdata-net
+
+  # ============================================
+  # Kafka
+  # ============================================
+  kafka:
+    image: confluentinc/cp-kafka:7.5.0
+    container_name: kafka
+    depends_on:
+      - zookeeper
+    ports:
+      - "9092:9092"
+      - "9093:9093"
+    environment:
+      KAFKA_BROKER_ID: 1
+      KAFKA_ZOOKEEPER_CONNECT: zookeeper:2181
+      KAFKA_ADVERTISED_LISTENERS: PLAINTEXT://kafka:9092,PLAINTEXT_HOST://localhost:9093
+      KAFKA_LISTENER_SECURITY_PROTOCOL_MAP: PLAINTEXT:PLAINTEXT,PLAINTEXT_HOST:PLAINTEXT
+      KAFKA_INTER_BROKER_LISTENER_NAME: PLAINTEXT
+      KAFKA_OFFSETS_TOPIC_REPLICATION_FACTOR: 1
+      KAFKA_AUTO_CREATE_TOPICS_ENABLE: "true"
+    networks:
+      - bigdata-net
+    healthcheck:
+      test: ["CMD", "kafka-topics", "--bootstrap-server", "localhost:9092", "--list"]
+      interval: 30s
+      timeout: 10s
+      retries: 5
+
+  # ============================================
+  # Hadoop HDFS NameNode
+  # ============================================
+  namenode:
+    image: bde2020/hadoop-namenode:2.0.0-hadoop3.2.1-java8
+    container_name: namenode
+    environment:
+      - CLUSTER_NAME=bigdata-cluster
+      - CORE_CONF_fs_defaultFS=hdfs://namenode:9000
+      - CORE_CONF_hadoop_http_staticuser_user=root
+      - HDFS_CONF_dfs_namenode_datanode_registration_ip___hostname___check=false
+      - HDFS_CONF_dfs_permissions_enabled=false
+      - HDFS_CONF_dfs_webhdfs_enabled=true
+    ports:
+      - "9870:9870"
+      - "9000:9000"
+    volumes:
+      - hadoop_namenode:/hadoop/dfs/name
+      - ./mapreduce:/mapreduce
+      - ./scripts:/scripts
+    networks:
+      - bigdata-net
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:9870"]
+      interval: 30s
+      timeout: 10s
+      retries: 5
+
+  # ============================================
+  # Hadoop HDFS DataNode
+  # ============================================
+  datanode:
+    image: bde2020/hadoop-datanode:2.0.0-hadoop3.2.1-java8
+    container_name: datanode
+    depends_on:
+      - namenode
+    environment:
+      - CORE_CONF_fs_defaultFS=hdfs://namenode:9000
+      - CORE_CONF_hadoop_http_staticuser_user=root
+      - HDFS_CONF_dfs_namenode_datanode_registration_ip___hostname___check=false
+      - HDFS_CONF_dfs_permissions_enabled=false
+    volumes:
+      - hadoop_datanode:/hadoop/dfs/data
+    networks:
+      - bigdata-net
+
+  # ============================================
+  # Hadoop YARN ResourceManager
+  # ============================================
+  resourcemanager:
+    image: bde2020/hadoop-resourcemanager:2.0.0-hadoop3.2.1-java8
+    container_name: resourcemanager
+    depends_on:
+      - namenode
+      - datanode
+    environment:
+      - CORE_CONF_fs_defaultFS=hdfs://namenode:9000
+      - YARN_CONF_yarn_resourcemanager_hostname=resourcemanager
+      - YARN_CONF_yarn_resourcemanager_address=resourcemanager:8032
+      - YARN_CONF_yarn_resourcemanager_scheduler_address=resourcemanager:8030
+      - YARN_CONF_yarn_resourcemanager_resource__tracker_address=resourcemanager:8031
+    ports:
+      - "8088:8088"
+    networks:
+      - bigdata-net
+
+  # ============================================
+  # Hadoop YARN NodeManager
+  # ============================================
+  nodemanager:
+    image: bde2020/hadoop-nodemanager:2.0.0-hadoop3.2.1-java8
+    container_name: nodemanager
+    depends_on:
+      - resourcemanager
+    environment:
+      - CORE_CONF_fs_defaultFS=hdfs://namenode:9000
+      - YARN_CONF_yarn_resourcemanager_hostname=resourcemanager
+      - YARN_CONF_yarn_nodemanager_aux___services=mapreduce_shuffle
+      - YARN_CONF_yarn_nodemanager_resource_memory___mb=2048
+      - YARN_CONF_yarn_nodemanager_resource_cpu___vcores=2
+    networks:
+      - bigdata-net
+
+  # ============================================
+  # PostgreSQL
+  # ============================================
+  postgres:
+    image: postgres:15-alpine
+    container_name: postgres
+    environment:
+      POSTGRES_DB: frauddb
+      POSTGRES_USER: fraud_user
+      POSTGRES_PASSWORD: fraud_password_123
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+      - ./sql/init.sql:/docker-entrypoint-initdb.d/init.sql
+    networks:
+      - bigdata-net
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U fraud_user -d frauddb"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  # ============================================
+  # Producer
+  # ============================================
+  producer:
+    build:
+      context: ./producer
+      dockerfile: Dockerfile
+    container_name: producer
+    depends_on:
+      kafka:
+        condition: service_healthy
+    environment:
+      KAFKA_BOOTSTRAP_SERVERS: kafka:9092
+      KAFKA_TOPIC: transactions
+      TRANSACTIONS_PER_BATCH: 100
+      BATCH_INTERVAL_SECONDS: 10
+      DEFAULT_DATE: "2025-12-18"
+    networks:
+      - bigdata-net
+
+  # ============================================
+  # Consumer (writes to HDFS)
+  # ============================================
+  consumer:
+    build:
+      context: ./consumer
+      dockerfile: Dockerfile
+    container_name: consumer
+    depends_on:
+      kafka:
+        condition: service_healthy
+      namenode:
+        condition: service_healthy
+    environment:
+      KAFKA_BOOTSTRAP_SERVERS: kafka:9092
+      KAFKA_TOPIC: transactions
+      HDFS_URL: hdfs://namenode:9000
+    networks:
+      - bigdata-net
+
+  # ============================================
+  # Backend FastAPI
+  # ============================================
+  backend:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    container_name: backend
+    depends_on:
+      postgres:
+        condition: service_healthy
+      namenode:
+        condition: service_healthy
+    environment:
+      POSTGRES_HOST: postgres
+      POSTGRES_PORT: 5432
+      POSTGRES_DB: frauddb
+      POSTGRES_USER: fraud_user
+      POSTGRES_PASSWORD: fraud_password_123
+      HDFS_URL: hdfs://namenode:9000
+    ports:
+      - "8000:8000"
+    volumes:
+      - ./mapreduce:/app/mapreduce
+      - ./loader:/app/loader
+      - ./scripts:/app/scripts
+    mem_limit: 4g
+    networks:
+      - bigdata-net
+
+  # ============================================
+  # Frontend Streamlit
+  # ============================================
+  frontend:
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
+    container_name: frontend
+    depends_on:
+      - backend
+    environment:
+      BACKEND_API_URL: http://backend:8000
+    ports:
+      - "8501:8501"
+    networks:
+      - bigdata-net
+
+networks:
+  bigdata-net:
+    driver: bridge
+
+volumes:
+  hadoop_namenode:
+  hadoop_datanode:
+  postgres_data:
