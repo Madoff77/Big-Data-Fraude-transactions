@@ -6,7 +6,7 @@
 
 A complete end-to-end Big Data architecture for real-time transaction monitoring and fraud risk detection using open-source technologies.
 
-## 📋 Table of Contents
+##  Table of Contents
 
 - [Overview](#overview)
 - [Architecture](#architecture)
@@ -19,7 +19,7 @@ A complete end-to-end Big Data architecture for real-time transaction monitoring
 - [Project Structure](#project-structure)
 - [Troubleshooting](#troubleshooting)
 
-## 🎯 Overview
+##  Overview
 
 This project implements a scalable fraud detection system that:
 - Ingests real-time transaction data via **Kafka**
@@ -40,7 +40,7 @@ This project implements a scalable fraud detection system that:
 ✅ **Fully containerized** with Docker Compose  
 ✅ **Rule-based fraud detection** (4 alert rules)
 
-## 🏗️ Architecture
+##  Architecture
 
 ### High-Level Architecture
 
@@ -107,7 +107,7 @@ This project implements a scalable fraud detection system that:
 5. **API**: FastAPI serves data from PostgreSQL
 6. **Visualization**: Streamlit dashboard queries API → displays insights
 
-## 🛠️ Technologies
+##  Technologies
 
 | Component | Technology | Purpose |
 |-----------|-----------|---------|
@@ -119,7 +119,7 @@ This project implements a scalable fraud detection system that:
 | **Frontend** | Streamlit | Web dashboard |
 | **Orchestration** | Docker Compose | Container management |
 
-## 📦 Prerequisites
+##  Prerequisites
 
 - **Docker Desktop** (20.10+)
 - **Docker Compose** (2.0+)
@@ -132,7 +132,7 @@ This project implements a scalable fraud detection system that:
 - **RAM**: 8GB minimum (Hadoop requires memory)
 - **OS**: Windows 10/11, macOS, or Linux
 
-## 🚀 Quick Start
+##  Quick Start
 
 ### 1. Clone or Create Project Directory
 
@@ -192,7 +192,7 @@ Navigate through the dashboard to see:
 - Top merchants
 - Time series analytics
 
-## 📖 Detailed Setup
+##  Detailed Setup
 
 ### Step-by-Step Instructions
 
@@ -275,7 +275,7 @@ Expected response:
 - **HDFS Web UI**: http://localhost:9870
 - **YARN Web UI**: http://localhost:8088
 
-## 🎬 Running the Demo
+##  Running the Demo
 
 ### Scenario: Process One Day of Transactions
 
@@ -356,7 +356,7 @@ curl "http://localhost:8000/alerts?dt=2025-12-18&severity_min=3"
 curl "http://localhost:8000/merchant/MERCHANT_0001/series?from=2025-12-18&to=2025-12-18"
 ```
 
-## 📚 API Documentation
+##  API Documentation
 
 ### Backend Endpoints
 
@@ -582,7 +582,7 @@ docker-compose down -v
 docker-compose up -d
 ```
 
-## 🎓 Architecture Explanation
+##  Architecture Explanation
 
 ### Why These Technologies?
 
@@ -650,18 +650,18 @@ The system implements 4 rule-based alerts:
 - Database replication
 - Load balancer for API
 
-## 📝 License
+##  License
 
 MIT License - feel free to use for educational purposes.
 
-## 🤝 Contributing
+##  Contributing
 
 This is an educational project for a Master's degree. Feedback and suggestions are welcome!
 
-## 📧 Contact
+##  Contact
 
 For questions or issues, please create an issue in the repository.
 
 ---
 
-**Good luck with your demo! 🚀**
+**Good luck! **
