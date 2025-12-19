@@ -48,12 +48,12 @@ Big_Data_Fraude/
 ├── backend/                         FastAPI Backend
 │   ├── main.py                      REST API with 6 endpoints
 │   ├── requirements.txt             Dependencies
-│   └── Dockerfile                 ✅ Container image
+│   └── Dockerfile                   Container image
 │
-└── 📁 frontend/                   ✅ Streamlit Dashboard
-    ├── app.py                     ✅ Interactive UI (4 pages)
-    ├── requirements.txt           ✅ Dependencies
-    └── Dockerfile                 ✅ Container image
+└──  frontend/                      Streamlit Dashboard
+    ├── app.py                      Interactive UI (4 pages)
+    ├── requirements.txt            Dependencies
+    └── Dockerfile                  Container image
 ```
 
 ---
