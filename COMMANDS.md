@@ -1,4 +1,4 @@
-# 🚀 Command Cheat Sheet - Fraud Detection System
+#  Command Cheat Sheet - Fraud Detection System
 
 ## System Status Commands
 
@@ -239,3 +239,4 @@ cat .env
 - Data generation: Continuous (100 tx per 10 seconds)
 - Pipeline execution: ~90 seconds total
 - Data visible in dashboard: Immediate after pipeline completes
+

@@ -1,53 +1,53 @@
-# 🎉 PROJECT COMPLETE - Big Data Fraud Detection MVP
+# PROJECT COMPLETE - Big Data Fraud Detection MVP
 
-## ✅ All Deliverables Created
+## All Deliverables Created
 
-### 📁 Complete Repository Structure
+### Complete Repository Structure
 
 ```
 Big_Data_Fraude/
-├── 📄 docker-compose.yml          ✅ Full orchestration (11 services)
-├── 📄 .env.example                ✅ Configuration template
-├── 📄 .gitignore                  ✅ Git ignore rules
-├── 📄 README.md                   ✅ Comprehensive documentation
-├── 📄 QUICKSTART.md               ✅ Quick reference guide
-├── 📄 verify_system.ps1           ✅ Windows health check script
-├── 📄 verify_system.sh            ✅ Linux/Mac health check script
+├── docker-compose.yml               Full orchestration (11 services)
+├── .env.example                     Configuration template
+├── .gitignore                       Git ignore rules
+├── README.md                        Comprehensive documentation
+├── QUICKSTART.md                    Quick reference guide
+├── verify_system.ps1                Windows health check script
+├── verify_system.sh                 Linux/Mac health check script
 │
-├── 📁 producer/                   ✅ Kafka Producer
-│   ├── producer.py                ✅ Generates synthetic transactions
-│   ├── requirements.txt           ✅ Dependencies
-│   └── Dockerfile                 ✅ Container image
+├── producer/                        Kafka Producer
+│   ├── producer.py                  Generates synthetic transactions
+│   ├── requirements.txt             Dependencies
+│   └── Dockerfile                   Container image
 │
-├── 📁 consumer/                   ✅ Kafka Consumer
-│   ├── consumer_to_hdfs.py        ✅ Writes to HDFS (partitioned)
-│   ├── requirements.txt           ✅ Dependencies
-│   └── Dockerfile                 ✅ Container image
+├── consumer/                        Kafka Consumer
+│   ├── consumer_to_hdfs.py          Writes to HDFS (partitioned)
+│   ├── requirements.txt             Dependencies
+│   └── Dockerfile                   Container image
 │
-├── 📁 mapreduce/                  ✅ MapReduce Jobs (Hadoop Streaming)
-│   ├── clean_normalize/           ✅ MR1: Clean & Normalize
-│   │   ├── mapper.py              ✅ JSON validation & normalization
-│   │   └── reducer.py             ✅ Pass-through reducer
-│   ├── merchant_metrics/          ✅ MR2: Merchant Aggregation
-│   │   ├── mapper.py              ✅ Emit merchant-day keys
-│   │   └── reducer.py             ✅ Compute metrics
-│   └── alerts/                    ✅ MR3: Alert Generation
-│       ├── mapper.py              ✅ Apply fraud rules
-│       └── reducer.py             ✅ Pass-through reducer
+├── mapreduce/                       MapReduce Jobs (Hadoop Streaming)
+│   ├── clean_normalize/             MR1: Clean & Normalize
+│   │   ├── mapper.py                JSON validation & normalization
+│   │   └── reducer.py               Pass-through reducer
+│   ├── merchant_metrics/            MR2: Merchant Aggregation
+│   │   ├── mapper.py                Emit merchant-day keys
+│   │   └── reducer.py               Compute metrics
+│   └── alerts/                      MR3: Alert Generation
+│       ├── mapper.py                Apply fraud rules
+│       └── reducer.py               Pass-through reducer
 │
-├── 📁 loader/                     ✅ Data Loader
-│   ├── load_to_postgres.py        ✅ HDFS → PostgreSQL
-│   └── requirements.txt           ✅ Dependencies
+├── loader/                          Data Loader
+│   ├── load_to_postgres.py          HDFS → PostgreSQL
+│   └── requirements.txt             Dependencies
 │
-├── 📁 scripts/                    ✅ Pipeline Scripts
-│   └── run_pipeline.sh            ✅ Execute MR1→MR2→MR3→Load
+├── scripts/                         Pipeline Scripts
+│   └── run_pipeline.sh              Execute MR1→MR2→MR3→Load
 │
-├── 📁 sql/                        ✅ Database Schema
-│   └── init.sql                   ✅ Tables, indexes, views
+├── sql/                             Database Schema
+│   └── init.sql                     Tables, indexes, views
 │
-├── 📁 backend/                    ✅ FastAPI Backend
-│   ├── main.py                    ✅ REST API with 6 endpoints
-│   ├── requirements.txt           ✅ Dependencies
+├── backend/                         FastAPI Backend
+│   ├── main.py                      REST API with 6 endpoints
+│   ├── requirements.txt             Dependencies
 │   └── Dockerfile                 ✅ Container image
 │
 └── 📁 frontend/                   ✅ Streamlit Dashboard
@@ -58,19 +58,19 @@ Big_Data_Fraude/
 
 ---
 
-## 🏗️ Architecture Summary
+## Architecture Summary
 
-### Technology Stack (All Open Source ✅)
+### Technology Stack (All Open Source)
 
 | Component | Technology | Status |
 |-----------|-----------|--------|
-| Streaming | Apache Kafka 7.5.0 | ✅ |
-| Storage | HDFS 3.2.1 | ✅ |
-| Processing | Hadoop MapReduce (Streaming) | ✅ |
-| Database | PostgreSQL 15 | ✅ |
-| Backend | FastAPI | ✅ |
-| Frontend | Streamlit | ✅ |
-| Orchestration | Docker Compose | ✅ |
+| Streaming | Apache Kafka 7.5.0 | Ready |
+| Storage | HDFS 3.2.1 | Ready |
+| Processing | Hadoop MapReduce (Streaming) | Ready |
+| Database | PostgreSQL 15 | Ready |
+| Backend | FastAPI | Ready |
+| Frontend | Streamlit | Ready |
+| Orchestration | Docker Compose | Ready |
 
 ### Data Pipeline Flow
 
@@ -92,35 +92,35 @@ Streamlit Dashboard (4 pages)
 
 ---
 
-## 🎯 Mandatory Requirements Met
+## Mandatory Requirements Met
 
-### ✅ Core Technologies
-- [x] **HDFS**: All data stored in HDFS with partitioning
-- [x] **MapReduce**: 3 Hadoop Streaming jobs (Python)
-- [x] **Kafka**: Streaming ingestion of transactions
-- [x] **Database**: PostgreSQL with 2 tables + indexes
-- [x] **Frontend**: Streamlit dashboard
-- [x] **Backend**: FastAPI REST API
+### Core Technologies
+- HDFS: All data stored in HDFS with partitioning
+- MapReduce: 3 Hadoop Streaming jobs (Python)
+- Kafka: Streaming ingestion of transactions
+- Database: PostgreSQL with 2 tables + indexes
+- Frontend: Streamlit dashboard
+- Backend: FastAPI REST API
 
-### ✅ Architecture Features
-- [x] **Real-time ingestion**: Kafka producer → topic → consumer
-- [x] **Partitioned storage**: `/data/raw/transactions/dt=YYYY-MM-DD/hour=HH/`
-- [x] **Batch processing**: 3 chained MapReduce jobs
-- [x] **Data marts**: Curated data in HDFS + PostgreSQL
-- [x] **API layer**: 6 RESTful endpoints
-- [x] **Visualization**: Interactive dashboard with charts
+### Architecture Features
+- Real-time ingestion: Kafka producer → topic → consumer
+- Partitioned storage: `/data/raw/transactions/dt=YYYY-MM-DD/hour=HH/`
+- Batch processing: 3 chained MapReduce jobs
+- Data marts: Curated data in HDFS + PostgreSQL
+- API layer: 6 RESTful endpoints
+- Visualization: Interactive dashboard with charts
 
-### ✅ Fraud Detection Rules
+### Fraud Detection Rules
 1. **HIGH_AMOUNT**: max_amount > $1000 (Severity: 3)
 2. **BURST**: tx_count > 30/day (Severity: 2)
-3. **MULTI_COUNTRY**: unique_countries ≥ 3 (Severity: 2)
+3. **MULTI_COUNTRY**: unique_countries >= 3 (Severity: 2)
 4. **HIGH_DECLINE**: decline_rate > 0.5 (Severity: 3)
 
-### ✅ Database Schema
+### Database Schema
 - **merchant_daily_metrics**: 9 columns, primary key (dt, merchant_id)
 - **alerts**: 8 columns, serial primary key, JSONB details
 
-### ✅ API Endpoints
+### API Endpoints
 1. `GET /health` - Health check
 2. `GET /metrics/merchants/top` - Top N merchants
 3. `GET /alerts` - Filtered alerts
@@ -128,7 +128,7 @@ Streamlit Dashboard (4 pages)
 5. `POST /pipeline/run` - Trigger pipeline
 6. `GET /stats/summary` - Dashboard stats
 
-### ✅ Dashboard Pages
+### Dashboard Pages
 1. **Overview**: Key metrics, alert summary, rule breakdown
 2. **Alerts**: Filterable table, detail views
 3. **Merchant Analytics**: Top merchants, time series charts
@@ -136,7 +136,7 @@ Streamlit Dashboard (4 pages)
 
 ---
 
-## 🚀 Quick Start Commands
+## Quick Start Commands
 
 ### 1. Start Everything
 ```bash

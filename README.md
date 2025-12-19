@@ -6,7 +6,7 @@
 
 A complete end-to-end Big Data architecture for real-time transaction monitoring and fraud risk detection using open-source technologies.
 
-##  Table of Contents
+## Table of Contents
 
 - [Overview](#overview)
 - [Architecture](#architecture)
@@ -19,7 +19,7 @@ A complete end-to-end Big Data architecture for real-time transaction monitoring
 - [Project Structure](#project-structure)
 - [Troubleshooting](#troubleshooting)
 
-##  Overview
+## Overview
 
 This project implements a scalable fraud detection system that:
 - Ingests real-time transaction data via **Kafka**
@@ -31,14 +31,14 @@ This project implements a scalable fraud detection system that:
 
 ### Key Features
 
-✅ **Real-time streaming** with Kafka  
-✅ **Big Data storage** with HDFS  
-✅ **Batch processing** with MapReduce (Python streaming)  
-✅ **Relational database** integration (PostgreSQL)  
-✅ **RESTful API** backend (FastAPI)  
-✅ **Interactive dashboard** (Streamlit)  
-✅ **Fully containerized** with Docker Compose  
-✅ **Rule-based fraud detection** (4 alert rules)
+- Real-time streaming with Kafka
+- Big Data storage with HDFS
+- Batch processing with MapReduce (Python streaming)
+- Relational database integration (PostgreSQL)
+- RESTful API backend (FastAPI)
+- Interactive dashboard (Streamlit)
+- Fully containerized with Docker Compose
+- Rule-based fraud detection (4 alert rules)
 
 ##  Architecture
 
@@ -665,3 +665,4 @@ For questions or issues, please create an issue in the repository.
 ---
 
 **Good luck! **
+

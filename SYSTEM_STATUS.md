@@ -1,36 +1,35 @@
-# 🎉 System Status Report - Dec 18, 2025, 14:08 UTC
+# System Status Report
 
-## ✅ All Systems Operational
+## All Systems Operational
 
 ### Infrastructure Services (11/11 Running)
 
 | Service | Status | Port | Health |
 |---------|--------|------|--------|
-| **Zookeeper** | ✅ Running | 2181 | Healthy |
-| **Kafka** | ✅ Running | 9092 | Healthy |
-| **HDFS NameNode** | ✅ Running | 9870 | Healthy |
-| **HDFS DataNode** | ✅ Running | 9864 | Healthy |
-| **YARN ResourceManager** | ✅ Running | 8088 | Healthy |
-| **YARN NodeManager** | ✅ Running | 8042 | Healthy |
-| **PostgreSQL** | ✅ Running | 5432 | Healthy |
-| **Producer** | ✅ Running | - | **900+ transactions** |
-| **Consumer** | ✅ Running | - | **Writing to HDFS** |
-| **Backend (FastAPI)** | ✅ Running | 8000 | **Connected** |
-| **Frontend (Streamlit)** | ✅ Running | 8501 | **Ready** |
+| **Zookeeper** | Running | 2181 | Healthy |
+| **Kafka** | Running | 9092 | Healthy |
+| **HDFS NameNode** | Running | 9870 | Healthy |
+| **HDFS DataNode** | Running | 9864 | Healthy |
+| **YARN ResourceManager** | Running | 8088 | Healthy |
+| **YARN NodeManager** | Running | 8042 | Healthy |
+| **PostgreSQL** | Running | 5432 | Healthy |
+| **Producer** | Running | - | Active |
+| **Consumer** | Running | - | Active |
+| **Backend (FastAPI)** | Running | 8000 | Connected |
+| **Frontend (Streamlit)** | Running | 8501 | Ready |
 
 ### Data Pipeline Status
 
-#### Kafka Ingestion ✅
+#### Kafka Ingestion
 - **Topic**: `transactions`
 - **Status**: Active
 - **Batches Generated**: 8+
 - **Transactions Produced**: 800+ (and counting)
-
-#### HDFS Storage ✅
+#### HDFS Storage
 - **Raw Data Path**: `/data/raw/transactions/dt=2025-12-18/`
 - **Partitions Created**: 24 hourly partitions (hour=00 through hour=23)
 - **Files Generated**: 50+ JSONL files
-- **Sample Data**: Confirmed ✓
+- **Sample Data**: Confirmed
 
 Example transaction:
 ```json
@@ -49,7 +48,7 @@ Example transaction:
 }
 ```
 
-#### Backend API ✅
+#### Backend API✅
 - **Status**: Connected to PostgreSQL
 - **Health**: `{"status": "healthy", "database": "connected"}`
 - **API Docs**: http://localhost:8000/docs

@@ -1,6 +1,6 @@
 # Quick Start Guide - Fraud Detection MVP
 
-## 🚀 Launch Commands
+## Launch Commands
 
 ```bash
 # 1. Start all services
@@ -24,7 +24,7 @@ curl -X POST "http://localhost:8000/pipeline/run?dt=2025-12-18"
 # Navigate to Overview, Alerts, and Merchant Analytics pages
 ```
 
-## 🔗 Service URLs
+## Service URLs
 
 | Service | URL | Purpose |
 |---------|-----|---------|
@@ -35,7 +35,7 @@ curl -X POST "http://localhost:8000/pipeline/run?dt=2025-12-18"
 | **YARN** | http://localhost:8088 | YARN Resource Manager |
 | **PostgreSQL** | localhost:5432 | Database (user: fraud_user, db: frauddb) |
 
-## 📊 Demo Flow
+## Demo Flow
 
 1. **Generate Data** (2-3 minutes)
    - Producer sends ~300 transactions to Kafka
@@ -55,7 +55,7 @@ curl -X POST "http://localhost:8000/pipeline/run?dt=2025-12-18"
    - Dashboard → Alerts: Filter and view fraud alerts
    - Dashboard → Merchant Analytics: Top merchants and trends
 
-## 🛠️ Useful Commands
+##  Useful Commands
 
 ```bash
 # Stop all services
@@ -85,7 +85,7 @@ docker exec -it postgres psql -U fraud_user -d frauddb -c "SELECT COUNT(*) FROM 
 docker exec -it backend bash /app/scripts/run_pipeline.sh 2025-12-18
 ```
 
-## ⚠️ Quick Troubleshooting
+##  Quick Troubleshooting
 
 **Problem**: Services not starting
 ```bash
@@ -112,7 +112,7 @@ docker exec -it backend python3 /app/loader/load_to_postgres.py 2025-12-18
 docker exec -it namenode hadoop fs -ls /data/raw/transactions/dt=2025-12-18/
 ```
 
-## 📋 Health Checks
+##  Health Checks
 
 ```bash
 # All services status
@@ -134,7 +134,7 @@ docker exec -it namenode hadoop fs -du -h /data/raw/transactions/
 docker exec -it postgres psql -U fraud_user -d frauddb -c "\dt"
 ```
 
-## 🎯 Key Metrics to Show in Demo
+##  Key Metrics to Show in Demo
 
 1. **Total Transactions**: ~300-1000 (depends on how long producer runs)
 2. **Merchants**: ~50 unique merchants
@@ -142,7 +142,7 @@ docker exec -it postgres psql -U fraud_user -d frauddb -c "\dt"
 4. **Top Rules**: HIGH_AMOUNT, BURST most common
 5. **Processing Time**: ~90 seconds for full pipeline
 
-## 📝 Notes
+##  Notes
 
 - Default date: `2025-12-18` (configurable in `.env`)
 - Transaction generation: 100 per batch, every 10 seconds
@@ -150,14 +150,14 @@ docker exec -it postgres psql -U fraud_user -d frauddb -c "\dt"
 - Pipeline is idempotent - can re-run safely
 - All data is partitioned by date and hour in HDFS
 
-## 🎓 For Presentation
+## For Presentation
 
 **Key Points to Highlight:**
-1. ✅ All mandatory technologies: HDFS, MapReduce, Kafka, PostgreSQL, Frontend, Backend
-2. ✅ End-to-end pipeline: Ingestion → Processing → Storage → API → Visualization
-3. ✅ Open-source only: No proprietary tech
-4. ✅ Docker Compose: Single command to run everything
-5. ✅ Demonstrable: Live dashboard with real-time data
+1. All mandatory technologies: HDFS, MapReduce, Kafka, PostgreSQL, Frontend, Backend
+2. End-to-end pipeline: Ingestion → Processing → Storage → API → Visualization
+3. Open-source only: No proprietary tech
+4. Docker Compose: Single command to run everything
+5. Demonstrable: Live dashboard with real-time data
 
 **Architecture Flow:**
 Producer → Kafka → Consumer → HDFS → MapReduce (3 jobs) → PostgreSQL → FastAPI → Streamlit
@@ -167,5 +167,3 @@ Producer → Kafka → Consumer → HDFS → MapReduce (3 jobs) → PostgreSQL �
 - BURST: > 30 transactions/day
 - MULTI_COUNTRY: >= 3 countries
 - HIGH_DECLINE: > 50% decline rate
-
-Good luck! 🚀

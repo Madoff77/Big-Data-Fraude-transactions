@@ -96,3 +96,4 @@ docker logs backend --tail 5
 ```
 
 Once backend shows "Uvicorn running", the API method will work again.
+
